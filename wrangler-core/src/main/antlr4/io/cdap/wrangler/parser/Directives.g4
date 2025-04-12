@@ -139,8 +139,11 @@ numberRange
  : Number ':' Number '=' value
  ;
 
+byteSizeArg : BYTE_SIZE;
+timeDurationArg : TIME_DURATION;
+
 value
- : String | Number | Column | Bool
+ : String | Number | Column | Bool | byteSizeArg | timeDurationArg
  ;
 
 ecommand
@@ -294,6 +297,12 @@ UnicodeEscape
 
 fragment
    HexDigit : ('0'..'9'|'a'..'f'|'A'..'F') ;
+
+fragment BYTE_UNIT : 'B' | 'KB' | 'MB' | 'GB' | 'TB' | 'PB' | 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb';
+fragment TIME_UNIT : 'ns' | 'us' | 'ms' | 's' | 'm' | 'h' | 'd' | 'NS' | 'US' | 'MS' | 'S' | 'M' | 'H' | 'D';
+
+BYTE_SIZE : [0-9]+('.'[0-9]+)? BYTE_UNIT;
+TIME_DURATION : [0-9]+('.'[0-9]+)? TIME_UNIT;
 
 Comment
  : ('//' ~[\r\n]* | '/*' .*? '*/' | '--' ~[\r\n]* ) -> skip
